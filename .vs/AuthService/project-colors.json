@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "cec81ba4-44ee-4b8c-8ed5-e50e10db4131": {
+      "ProjectGuid": "cec81ba4-44ee-4b8c-8ed5-e50e10db4131",
+      "DisplayName": "AuthService",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

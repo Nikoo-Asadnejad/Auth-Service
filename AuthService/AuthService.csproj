@@ -10,4 +10,25 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ErrorHandlingDll">
+      <HintPath>..\..\..\ErrorHandlingDll\ErrorHandlingDll\ErrorHandlingDll\ErrorHandlingDll\bin\Release\net6.0\ErrorHandlingDll.dll</HintPath>
+    </Reference>
+    <Reference Include="GenericRepositoryDll">
+      <HintPath>..\..\..\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\bin\Release\net6.0\GenericRepositoryDll.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpService">
+      <HintPath>..\..\..\HttpService\HttpServiceDll\HttpService\bin\Release\net6.0\HttpService.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

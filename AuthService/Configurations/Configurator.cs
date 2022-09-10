@@ -1,5 +1,7 @@
 using AuthService.Configurations.AppSettings;
 using AuthService.Data;
+using AuthService.Interfaces;
+using AuthService.Services;
 using ErrorHandlingDll.Configurations;
 using GenericRepositoryDll.Configuration;
 using HttpService.Configuration;
@@ -31,6 +33,11 @@ namespace SmsService.Configurations
       ErrorHandlingDllConfigurator.InjectServices(services, configuration);
       HttpServiceConfigurator.InjectHttpService(services);
       GenericRepositoryConfigurator.InjectServices(services);
+
+      services.AddScoped<IAuthService, AuthService.Services.AuthService>();
+      services.AddScoped<ISmsService, AuthService.Services.SmsService>();
+      services.AddScoped<IUserService, UserService>();
+      services.AddScoped<IOptCodeService, OptCodeService>();
 
     }
 

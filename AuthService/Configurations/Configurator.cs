@@ -1,7 +1,9 @@
 using AuthService.Configurations.AppSettings;
+using AuthService.Data;
 using ErrorHandlingDll.Configurations;
 using GenericRepositoryDll.Configuration;
 using HttpService.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 
@@ -22,6 +24,9 @@ namespace SmsService.Configurations
       });
 
       services.Configure<AppSetting>(configuration);
+
+      var connection = configuration.GetConnectionString("SQLServer");
+      services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connection));
 
       ErrorHandlingDllConfigurator.InjectServices(services, configuration);
       HttpServiceConfigurator.InjectHttpService(services);

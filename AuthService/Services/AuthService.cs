@@ -4,6 +4,7 @@ using AuthService.Dtos.Sms;
 using AuthService.Dtos.User;
 using AuthService.Entities;
 using AuthService.Interfaces;
+using AuthService.Utils;
 using ErrorHandlingDll.ReturnTypes;
 using GenericRepositoryDll.Repository.GenericRepository;
 using Microsoft.Extensions.Options;
@@ -20,16 +21,19 @@ public class AuthService : IAuthService
   private readonly AppSetting _appSetting;
   private readonly IUserService _userService;
   private readonly ISmsService _smsService;
-  public AuthService(IOptions<AppSetting> appSetting , IUserService userService , ISmsService smsService)
+  private readonly IJwtTokenTools _jwtTokenTools;
+  public AuthService(IOptions<AppSetting> appSetting , IUserService userService , ISmsService smsService,
+    IJwtTokenTools jwtTokenTools)
   {
     _userService = userService;
     _appSetting = appSetting.Value;
+    _jwtTokenTools = jwtTokenTools;
     _smsService = smsService;
   }
-  public async Task<ReturnModel<string>> SignIn(UserCellPhoneDto userCellPhone)
+  public async Task<ReturnModel<string>> SignIn(SignInDto signInDto)
   {
     ReturnModel<string> result = new();
-    var getUser =await _userService.GetByCellPhone(userCellPhone.CellPhone);
+    var getUser =await _userService.GetByCellPhone(signInDto.CellPhone);
 
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is null)
@@ -47,9 +51,33 @@ public class AuthService : IAuthService
     return result;
   }
 
-  public Task<ReturnModel<string>> SignUp(UserBriefDto briefUser)
+  public async Task<ReturnModel<string>> SignUp(SignUpDto signUpModel)
   {
-    throw new NotImplementedException();
+    ReturnModel<string> result = new();
+    var getUser = await _userService.GetByCellPhone(signUpModel.CellPhone);
+
+    UserBriefDto existingUser = getUser.Data;
+    if (existingUser is not null)
+    {
+      result.CreateBadRequestModel(message: AppMessages.PleaseSignIn);
+      return result;
+    }
+
+    UserModel userModel = new UserModel();
+    userModel.CreateBasicUser(signUpModel);
+
+    var createUser = await _userService.Create(userModel);
+    if(createUser.HttpStatusCode is not HttpStatusCode.OK || createUser.Data is null)
+    {
+      result.CreateServerErrorModel();
+      return result;
+    }
+
+    UserBriefDto userBrief = new (signUpModel, (long)createUser.Data);
+    var token = _jwtTokenTools.GenerateToken(userBrief);
+
+    result.CreateSuccessModel(data : token , title : "Token");
+    return result;
   }
 
   private async Task<string> SendOptSms(UserBriefDto userBrief )

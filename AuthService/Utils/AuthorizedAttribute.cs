@@ -3,16 +3,24 @@ using AuthService.Interfaces;
 using ErrorHandlingDll.ReturnTypes;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
+using static SmsService.Percistance.BaseData;
 
 namespace AuthService.Utils
 {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
   public class AuthorizedAttribute : Attribute, IAuthorizationFilter
   {
+    private string _role;
+
     private readonly IJwtTokenTools _jwtTools;
-    public AuthorizedAttribute(IJwtTokenTools jwtTokenTools)
+
+    private AuthorizedAttribute(IJwtTokenTools jwtTokenTools)
     {
       _jwtTools = jwtTokenTools;
+    }
+    public AuthorizedAttribute(string role = null)
+    {
+      _role = role;
     }
     public void OnAuthorization(AuthorizationFilterContext context)
     {
@@ -21,13 +29,15 @@ namespace AuthService.Utils
         UnAuthorize(context.HttpContext);
 
       UserBriefDto user;
-      var isTokenValid  = _jwtTools.ValidateToken(token, out user);
+      var isTokenValid = _jwtTools.ValidateToken(token, out user);
 
-      if(!isTokenValid || user is null)
+      if (!isTokenValid || user is null)
         UnAuthorize(context.HttpContext);
 
-        // attach user to context on successful jwt validation
-        context.HttpContext.Items["User"] = user;
+      context.HttpContext.Items["User"] = user;
+
+      if (_role is not null && _role != user?.Role)
+        UnAuthorize(context.HttpContext);
 
     }
     private void UnAuthorize(HttpContext httpContext)

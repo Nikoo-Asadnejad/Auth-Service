@@ -30,7 +30,6 @@ namespace AuthService.Utils
         context.HttpContext.Items["User"] = user;
 
     }
-
     private void UnAuthorize(HttpContext httpContext)
     {
       //add return model to respone

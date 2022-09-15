@@ -21,6 +21,11 @@ public class UserModel : BaseEntityModel
   public string LastName { get; set; }
 
   [Required]
+  [StringLength(3)]
+  [RegularExpression("ADM|STF|USR")]
+  public string Role { get; set; }
+
+  [Required]
   [MaxLength(11)]
   [StringLength(11)]
   public string CellPhone { get; set; }

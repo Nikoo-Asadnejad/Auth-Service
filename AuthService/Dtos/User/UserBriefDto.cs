@@ -1,5 +1,5 @@
 
 namespace AuthService.Dtos.User;
-public record UserBriefDto(long id, string firstName, string lastName, string phoneNumber);
+public record UserBriefDto(long Id, string FirstName, string LastName, string CellPhone, string Email, string Role);
 
 

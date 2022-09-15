@@ -5,6 +5,11 @@
       "ProjectGuid": "cec81ba4-44ee-4b8c-8ed5-e50e10db4131",
       "DisplayName": "AuthService",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

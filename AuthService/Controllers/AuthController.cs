@@ -1,3 +1,4 @@
+using AuthService.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace AuthService.Controllers
   [ApiController]
   public class AuthController : ControllerBase
   {
+    [Authorized()]
     public async Task<IActionResult> SignIn()
     {
 

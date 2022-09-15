@@ -4,7 +4,6 @@ using static SmsService.Percistance.BaseData;
 namespace AuthService.Utils;
 public static class HttpContextExtensions
 {
-
   public static UserBriefDto GetUser(this HttpContext httpContext)
    => (UserBriefDto)httpContext.Items["User"];
 

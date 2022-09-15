@@ -8,6 +8,11 @@ public struct BaseData
     public const string User = "USR";
   }
 
+  public struct SmsProvidersId
+  {
+    public const int KavehNgar = 1;
+  }
+
 }
 
 

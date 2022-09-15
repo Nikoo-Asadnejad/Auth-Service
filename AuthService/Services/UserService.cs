@@ -1,3 +1,4 @@
+using AuthService.Dtos.User;
 using AuthService.Entities;
 using AuthService.Interfaces;
 using ErrorHandlingDll.ReturnTypes;
@@ -26,6 +27,22 @@ public class UserService : IUserService
 
     UserModel user = await _userRepository.FindAsync(id);
     if(user is null)
+    {
+      result.CreateNotFoundModel();
+      return result;
+    }
+
+    result.CreateSuccessModel(data: user);
+    return result;
+  }
+
+  public async Task<ReturnModel<UserBriefDto>> GetByCellPhone(string cellPhone)
+  {
+    ReturnModel<UserBriefDto> result = new();
+
+    UserBriefDto user = (UserBriefDto)await _userRepository.GetSingleAsync(query: u => u.CellPhone == cellPhone,
+                                                                                    selector: u => new UserBriefDto(u));
+    if (user is null)
     {
       result.CreateNotFoundModel();
       return result;

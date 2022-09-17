@@ -21,7 +21,6 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codeModel.Id, "code Id");
     return result;
   }
-
   public async Task<ReturnModel<OptCodeModel>> Get(long id)
   {
     ReturnModel<OptCodeModel> result = new();
@@ -36,7 +35,6 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: code);
     return result;
   }
-
   public async Task<ReturnModel<OptCodeModel>> GetByCode(string code)
   {
     ReturnModel<OptCodeModel> result = new();

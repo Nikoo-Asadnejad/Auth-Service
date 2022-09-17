@@ -49,6 +49,7 @@ namespace SmsService.Configurations
       services.AddScoped<ISmsService, AuthService.Services.SmsService>();
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IOptCodeService, OptCodeService>();
+      services.AddScoped<IUserTokenService, UserTokenService>();
       services.AddSingleton<IJwtTokenTools, JwtTokenTools>();
 
       services.AddAuthentication(options =>

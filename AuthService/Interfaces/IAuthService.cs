@@ -6,6 +6,7 @@ namespace AuthService.Interfaces;
 public interface IAuthService
 {
   Task<ReturnModel<long>> SignUp(SignUpDto signUpModel );
-  Task<ReturnModel<string>> SignIn(SignInDto briefUser);
+  Task<ReturnModel<long>> SignIn(SignInDto briefUser);
+  Task<ReturnModel<string>> GenerateToken(GenerateTokenDto input);
 }
 

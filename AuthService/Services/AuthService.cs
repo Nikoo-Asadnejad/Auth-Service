@@ -24,19 +24,21 @@ public class AuthService : IAuthService
   private readonly ISmsService _smsService;
   private readonly IJwtTokenTools _jwtTokenTools;
   private readonly IOptCodeService _otpCodeService;
+  private readonly IUserTokenService _userTokenService;
   public AuthService(IOptions<AppSetting> appSetting, IUserService userService, ISmsService smsService,
-    IJwtTokenTools jwtTokenTools , IOptCodeService optCodeService)
+    IJwtTokenTools jwtTokenTools , IOptCodeService optCodeService , IUserTokenService userTokenService)
   {
     _userService = userService;
     _appSetting = appSetting.Value;
     _jwtTokenTools = jwtTokenTools;
     _smsService = smsService;
     _otpCodeService = optCodeService;
+    _userTokenService = userTokenService;
   }
 
-  public async Task<ReturnModel<string>> SignIn(SignInDto signInDto)
+  public async Task<ReturnModel<long>> SignIn(SignInDto signInDto)
   {
-    ReturnModel<string> result = new();
+    ReturnModel<long> result = new();
     var getUser = await _userService.GetByCellPhoneAsync(signInDto.CellPhone);
 
     UserBriefDto existingUser = getUser.Data;
@@ -51,7 +53,7 @@ public class AuthService : IAuthService
     if (optCode is not null)
       await _userService.UpdateLastAuthCodeAsync(existingUser.Id, optCode);
 
-    result.CreateSuccessModel(optCode);
+    result.CreateSuccessModel(existingUser.Id);
     return result;
   }
   public async Task<ReturnModel<long>> SignUp(SignUpDto signUpModel)
@@ -85,12 +87,11 @@ public class AuthService : IAuthService
     result.CreateSuccessModel(data:userId , title: "User Id");
     return result;
   }
-  public async Task<ReturnModel<string>> GenerateToken(string optCode, string cellPhone)
+  public async Task<ReturnModel<string>> GenerateToken(GenerateTokenDto input)
   {
     ReturnModel<string> result = new();
 
-    var getUser = await _userService.GetByCellPhoneAsync(cellPhone);
-
+    var getUser = await _userService.GetByCellPhoneAsync(input.CellPhone);
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is null)
     {
@@ -98,7 +99,7 @@ public class AuthService : IAuthService
       return result;
     }
 
-    bool isOptCodeValid = await _otpCodeService.ValidateOptCodeAsync(optCode, existingUser.Id);
+    bool isOptCodeValid = await _otpCodeService.ValidateOptCodeAsync(input.OptCode, existingUser.Id);
     if (!isOptCodeValid )
     {
       result.CreateUnAuthorizedModel(message: AppMessages.InvalidOptCode);
@@ -106,6 +107,9 @@ public class AuthService : IAuthService
     }
 
     var token = _jwtTokenTools.GenerateToken(existingUser);
+
+    await _userTokenService.CreateAsync(existingUser.Id, token);
+    await _userTokenService.ExpireOldTokensAsync(existingUser.Id);
 
     result.CreateSuccessModel(token, "Token");
     return result;

@@ -25,5 +25,18 @@ public class UserTokenService : IUserTokenService
 
     return userTokenModel.Id;
   }
+
+  public async Task ExpireOldTokensAsync(long userId)
+  {
+    List<UserTokenModel> tokens = await _userTokenRepository
+                                .GetListAsync<UserTokenModel>(query: t => t.UserId == userId
+                                                                  && t.IsExpired == false);
+
+    //it may crash due to change tracking of the repository , if so check repository dll
+    tokens.ForEach(t => t.IsExpired = true);
+
+    await _userTokenRepository.UpdateRangeAsync(tokens);
+    await _userTokenRepository.SaveAsync();
+  }
 }
 

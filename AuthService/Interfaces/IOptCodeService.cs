@@ -5,11 +5,11 @@ namespace AuthService.Interfaces;
 
 public interface IOptCodeService
 {
-  Task<ReturnModel<long?>> Create(OptCodeModel userModel);
-  Task<ReturnModel<long?>> Update(OptCodeModel userModel);
-  Task<ReturnModel<OptCodeModel>> Get(long id);
-  Task<ReturnModel<OptCodeModel>> GetByCode(string code);
-  Task<ReturnModel<List<OptCodeModel>>> GetList(short count = 10, short ofset =0);
+  Task<ReturnModel<long?>> CreateAsync(OptCodeModel userModel);
+  Task<ReturnModel<long?>> UpdateAsync(OptCodeModel userModel);
+  Task<ReturnModel<OptCodeModel>> GetAsync(long id);
+  Task<ReturnModel<OptCodeModel>> GetByCodeAsync(string code);
+  Task<ReturnModel<List<OptCodeModel>>> GetListAsync(short count = 10, short ofset =0);
 }
 
 

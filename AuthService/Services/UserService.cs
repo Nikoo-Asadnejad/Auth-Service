@@ -12,7 +12,7 @@ public class UserService : IUserService
   {
     _userRepository = userRepository;
   }
-  public async Task<ReturnModel<long?>> Create(UserModel userModel)
+  public async Task<ReturnModel<long?>> CreateAsync(UserModel userModel)
   {
     ReturnModel<long?> result = new();
     await _userRepository.AddAsync(userModel);
@@ -21,7 +21,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: userModel.Id, "UserId");
     return result;
   }
-  public async Task<ReturnModel<UserModel>> Get(long id)
+  public async Task<ReturnModel<UserModel>> GetAsync(long id)
   {
     ReturnModel<UserModel> result = new();
 
@@ -35,7 +35,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: user);
     return result;
   }
-  public async Task<ReturnModel<UserBriefDto>> GetByCellPhone(string cellPhone)
+  public async Task<ReturnModel<UserBriefDto>> GetByCellPhoneAsync(string cellPhone)
   {
     ReturnModel<UserBriefDto> result = new();
 
@@ -50,7 +50,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: user);
     return result;
   }
-  public async Task<ReturnModel<List<UserModel>>> GetList(short count = 10, short offset = 0)
+  public async Task<ReturnModel<List<UserModel>>> GetListAsync(short count = 10, short offset = 0)
   {
     ReturnModel<List<UserModel>> result = new();
 
@@ -59,7 +59,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: users);
     return result;
   }
-  public async Task<ReturnModel<long?>> Update(UserModel userModel)
+  public async Task<ReturnModel<long?>> UpdateAsync(UserModel userModel)
   {
     ReturnModel<long?> result = new();
 
@@ -68,7 +68,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: userModel.Id , "User Id");
     return result;
   }
-  public async Task<ReturnModel<UserCodeDto>> GetLastAuthCode(long userId)
+  public async Task<ReturnModel<UserCodeDto>> GetLastAuthCodeAsync(long userId)
   {
     ReturnModel<UserCodeDto> result = new();
 
@@ -83,7 +83,7 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: userCode);
     return result;
   }
-  public async Task<ReturnModel<long?>> UpdateLastAuthCode(long userId,string code)
+  public async Task<ReturnModel<long?>> UpdateLastAuthCodeAsync(long userId,string code)
   {
     ReturnModel<long?> result = new();
 

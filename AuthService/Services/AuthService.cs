@@ -5,6 +5,7 @@ using AuthService.Dtos.User;
 using AuthService.Entities;
 using AuthService.Interfaces;
 using AuthService.Utils;
+using AuthService.Utils.Mappers;
 using ErrorHandlingDll.ReturnTypes;
 using GenericRepositoryDll.Repository.GenericRepository;
 using Microsoft.Extensions.Options;
@@ -22,19 +23,21 @@ public class AuthService : IAuthService
   private readonly IUserService _userService;
   private readonly ISmsService _smsService;
   private readonly IJwtTokenTools _jwtTokenTools;
+  private readonly IOptCodeService _otpCodeService;
   public AuthService(IOptions<AppSetting> appSetting, IUserService userService, ISmsService smsService,
-    IJwtTokenTools jwtTokenTools)
+    IJwtTokenTools jwtTokenTools , IOptCodeService optCodeService)
   {
     _userService = userService;
     _appSetting = appSetting.Value;
     _jwtTokenTools = jwtTokenTools;
     _smsService = smsService;
+    _otpCodeService = optCodeService;
   }
 
   public async Task<ReturnModel<string>> SignIn(SignInDto signInDto)
   {
     ReturnModel<string> result = new();
-    var getUser = await _userService.GetByCellPhone(signInDto.CellPhone);
+    var getUser = await _userService.GetByCellPhoneAsync(signInDto.CellPhone);
 
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is null)
@@ -46,7 +49,7 @@ public class AuthService : IAuthService
     string optCode = await SendOptSms(existingUser);
 
     if (optCode is not null)
-      await _userService.UpdateLastAuthCode(existingUser.Id, optCode);
+      await _userService.UpdateLastAuthCodeAsync(existingUser.Id, optCode);
 
     result.CreateSuccessModel(optCode);
     return result;
@@ -55,7 +58,7 @@ public class AuthService : IAuthService
   {
     ReturnModel<long> result = new();
 
-    var getUser = await _userService.GetByCellPhone(signUpModel.CellPhone);
+    var getUser = await _userService.GetByCellPhoneAsync(signUpModel.CellPhone);
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is not null)
     {
@@ -66,7 +69,7 @@ public class AuthService : IAuthService
     
     UserModel userModel = new UserModel();
     userModel.CreateBasicUser(signUpModel);
-    var createUser = await _userService.Create(userModel);
+    var createUser = await _userService.CreateAsync(userModel);
     if (createUser.HttpStatusCode is not HttpStatusCode.OK || createUser.Data is null)
     {
       result.CreateServerErrorModel();
@@ -77,7 +80,7 @@ public class AuthService : IAuthService
     UserBriefDto userBrief = new (signUpModel, userId);
     string optCode = await SendOptSms(userBrief);
     if (optCode is not null)
-      await _userService.UpdateLastAuthCode(userId, optCode);
+      await _userService.UpdateLastAuthCodeAsync(userId, optCode);
 
     result.CreateSuccessModel(data:userId , title: "User Id");
     return result;
@@ -86,7 +89,7 @@ public class AuthService : IAuthService
   {
     ReturnModel<string> result = new();
 
-    var getUser = await _userService.GetByCellPhone(cellPhone);
+    var getUser = await _userService.GetByCellPhoneAsync(cellPhone);
 
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is null)
@@ -111,7 +114,7 @@ public class AuthService : IAuthService
   private async Task<bool> ValidateOptCodeAsync(string optCode, long userId)
   {
    
-    var getLastCode = await _userService.GetLastAuthCode(userId);
+    var getLastCode = await _userService.GetLastAuthCodeAsync(userId);
     string lastOptCode = getLastCode.Data.Code;
 
     if (getLastCode.HttpStatusCode == HttpStatusCode.NotFound
@@ -124,18 +127,30 @@ public class AuthService : IAuthService
   }
   private async Task<string> SendOptSms(UserBriefDto userBrief)
   {
-    string code = new Random().Next(4).ToString();
+    string code = await CreateOptCodeAsync(userBrief.Id);
+    if (code is null)
+      return null;
 
-
+    //after sending make opt code sent
     SendOptSmsInputDto sendOptSmsInput = new(code, SmsProvidersId.KavehNgar, userBrief);
-    var sendSms = await _smsService.SendOptSms(sendOptSmsInput);
+    var sendSms = await _smsService.SendOptSmsAsync(sendOptSmsInput);
 
-    if (sendSms.HttpStatusCode is HttpStatusCode.OK)
+    if (sendSms.HttpStatusCode is HttpStatusCode.OK && sendSms.Data is not null)
       return code;
     else
       return null;
 
   }
+  private async Task<string> CreateOptCodeAsync(long userId)
+  {
+    OptCodeModel codeModel = new ();
+    codeModel.CreateBasicModelWithRandomCode(userId);
 
+    var createOptCode = await _otpCodeService.CreateAsync(codeModel);
+    if (createOptCode.HttpStatusCode is HttpStatusCode.OK && createOptCode.Data is not null)
+      return codeModel.Code;
+
+    return null;
+  }
 }
 

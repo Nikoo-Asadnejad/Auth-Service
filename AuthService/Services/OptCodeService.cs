@@ -12,7 +12,7 @@ public class OptCodeService : IOptCodeService
   {
     _codeRepository = codeRepository;
   }
-  public async Task<ReturnModel<long?>> Create(OptCodeModel codeModel)
+  public async Task<ReturnModel<long?>> CreateAsync(OptCodeModel codeModel)
   {
     ReturnModel<long?> result = new();
     await _codeRepository.AddAsync(codeModel);
@@ -21,7 +21,7 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codeModel.Id, "code Id");
     return result;
   }
-  public async Task<ReturnModel<OptCodeModel>> Get(long id)
+  public async Task<ReturnModel<OptCodeModel>> GetAsync(long id)
   {
     ReturnModel<OptCodeModel> result = new();
 
@@ -35,7 +35,7 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: code);
     return result;
   }
-  public async Task<ReturnModel<OptCodeModel>> GetByCode(string code)
+  public async Task<ReturnModel<OptCodeModel>> GetByCodeAsync(string code)
   {
     ReturnModel<OptCodeModel> result = new();
 
@@ -49,7 +49,7 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codeModel);
     return result;
   }
-  public async Task<ReturnModel<List<OptCodeModel>>> GetList(short count = 10 , short offset = 0)
+  public async Task<ReturnModel<List<OptCodeModel>>> GetListAsync(short count = 10 , short offset = 0)
   {
     ReturnModel<List<OptCodeModel>> result = new();
 
@@ -58,7 +58,7 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codes);
     return result;
   }
-  public async Task<ReturnModel<long?>> Update(OptCodeModel codeModel)
+  public async Task<ReturnModel<long?>> UpdateAsync(OptCodeModel codeModel)
   {
     ReturnModel<long?> result = new();
 

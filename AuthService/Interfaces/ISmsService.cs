@@ -4,7 +4,7 @@ using ErrorHandlingDll.ReturnTypes;
 namespace AuthService.Interfaces;
 public interface ISmsService
 {
-  Task<ReturnModel<long>> SendOptSms(SendOptSmsInputDto smsInput);
-  Task<ReturnModel<long>> SendSms(SendSmsInputDto smsInput);
+  Task<ReturnModel<long?>> SendOptSmsAsync(SendOptSmsInputDto smsInput);
+  Task<ReturnModel<long?>> SendSmsAsync(SendSmsInputDto smsInput);
 }
 

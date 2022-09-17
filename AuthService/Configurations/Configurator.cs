@@ -1,5 +1,8 @@
 using AuthService.Configurations.AppSettings;
 using AuthService.Data;
+using AuthService.DataAccess.Repository;
+using AuthService.DataAccess.Repository.Interfaces;
+using AuthService.DataAccess.Repository.Repositories;
 using AuthService.Interfaces;
 using AuthService.Services;
 using AuthService.Utils;
@@ -50,6 +53,10 @@ namespace SmsService.Configurations
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IOptCodeService, OptCodeService>();
       services.AddScoped<IUserTokenService, UserTokenService>();
+      services.AddScoped<IUserTokenRepository, UserTokenRepository>();
+      services.AddScoped<IUserRepository, UserRepository>();
+      services.AddScoped<IOptCodeRepository, OptCodeRepository>();
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddSingleton<IJwtTokenTools, JwtTokenTools>();
 
       services.AddAuthentication(options =>

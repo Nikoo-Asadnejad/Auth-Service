@@ -1,7 +1,7 @@
 using AuthService.Entities;
 
 namespace AuthService.Utils.Mappers;
-public static class OptCodeMappers
+public static class OptCodeMapper
 {
   public static OptCodeModel CreateBasicModel(this OptCodeModel codeModel,
                                                   long userId, string code)

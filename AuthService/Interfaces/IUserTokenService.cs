@@ -3,6 +3,6 @@ using ErrorHandlingDll.ReturnTypes;
 namespace AuthService.Interfaces;
 public interface IUserTokenService
 {
-  Task<ReturnModel<long>> CreateAsync(UserTokenModel userTokenModel);
+  Task<long> CreateAsync(long userId , string token);
 }
 

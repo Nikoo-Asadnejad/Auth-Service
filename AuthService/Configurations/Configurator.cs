@@ -20,11 +20,7 @@ namespace SmsService.Configurations
   public static class Configurator
   {
 
-    public static void ConfigureApp(IServiceCollection services, IConfiguration configuration , WebApplication app)
-    {
-      InjectServices(services, configuration);
-      ConfigPipeLines(app);
-    }
+
     public static void InjectServices(IServiceCollection services, IConfiguration configuration)
     {
 
@@ -43,6 +39,7 @@ namespace SmsService.Configurations
 
       var connection = configuration.GetConnectionString("SQLServer");
       services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connection));
+      services.AddScoped<DbContext, AuthDbContext>();
 
       ErrorHandlingDllConfigurator.InjectServices(services, configuration);
       HttpServiceConfigurator.InjectHttpService(services);
@@ -104,7 +101,7 @@ namespace SmsService.Configurations
         });
       }
 
-      app.Run();
+
     }
 
 

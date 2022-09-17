@@ -8,7 +8,7 @@ public class UserModel : BaseEntityModel
   [Key]
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   [Required]
-  public int Id { get; set; }
+  public long Id { get; set; }
 
   [Required]
   [MaxLength(255)]
@@ -42,8 +42,8 @@ public class UserModel : BaseEntityModel
   [MaxLength(1)]
   public char Gender { get; set; }
   public string LastAuthCode { get; set; }
-  public ICollection<OptCodeModel> AuthCodes { get; set; }
-
+  public virtual ICollection<OptCodeModel> AuthCodes { get; set; }
+  public virtual ICollection<UserTokenModel> UserTokens { get; set; }
   public UserModel() :base()
   {
 

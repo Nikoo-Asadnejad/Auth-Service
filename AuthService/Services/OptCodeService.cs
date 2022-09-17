@@ -37,7 +37,7 @@ public class OptCodeService : IOptCodeService
     return result;
   }
 
-  public async Task<ReturnModel<OptCodeModel>> Get(string code)
+  public async Task<ReturnModel<OptCodeModel>> GetByCode(string code)
   {
     ReturnModel<OptCodeModel> result = new();
 
@@ -51,26 +51,6 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codeModel);
     return result;
   }
-
-  public async Task<ReturnModel<string>> GetUserLastAuthCode(long userId)
-  {
-    ReturnModel<string> result = new();
-
-    string lastCode = (string) _codeRepository.GetList(query : c => c.UserId == userId,
-                                            selector: c => c.Code ,
-                                            orderBy : x=> x.CreateDate,
-                                            orderType :OrderType.Desc)
-                                  .FirstOrDefault();
-
-    if (string.IsNullOrEmpty(lastCode))
-    {
-      result.CreateNotFoundModel();
-      return result;
-    }
-
-    result.CreateSuccessModel(data: lastCode);
-    return result;
-  }
   public async Task<ReturnModel<List<OptCodeModel>>> GetList(short count = 10 , short offset = 0)
   {
     ReturnModel<List<OptCodeModel>> result = new();
@@ -80,7 +60,6 @@ public class OptCodeService : IOptCodeService
     result.CreateSuccessModel(data: codes);
     return result;
   }
-
   public async Task<ReturnModel<long?>> Update(OptCodeModel codeModel)
   {
     ReturnModel<long?> result = new();

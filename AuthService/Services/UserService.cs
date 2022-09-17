@@ -35,7 +35,6 @@ public class UserService : IUserService
     result.CreateSuccessModel(data: user);
     return result;
   }
-
   public async Task<ReturnModel<UserBriefDto>> GetByCellPhone(string cellPhone)
   {
     ReturnModel<UserBriefDto> result = new();
@@ -67,6 +66,21 @@ public class UserService : IUserService
     await _userRepository.UpdateAsync(userModel);
 
     result.CreateSuccessModel(data: userModel.Id , "User Id");
+    return result;
+  }
+  public async Task<ReturnModel<UserCodeDto>> GetLastAuthCode(long userId)
+  {
+    ReturnModel<UserCodeDto> result = new();
+
+    UserCodeDto userCode = (UserCodeDto) await _userRepository.GetSingleAsync(query: u => u.Id == userId,
+                                                     selector: u => new UserCodeDto(u.Id, u.LastAuthCode));
+    if(userCode is null)
+    {
+      result.CreateNotFoundModel();
+      return result;
+    }
+
+    result.CreateSuccessModel(data: userCode);
     return result;
   }
   public async Task<ReturnModel<long?>> UpdateLastAuthCode(long userId,string code)

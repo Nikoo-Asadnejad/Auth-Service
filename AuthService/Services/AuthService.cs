@@ -51,6 +51,23 @@ public class AuthService : IAuthService
     return result;
   }
 
+  public async Task<ReturnModel<bool>> ValidateOptCode(string optCode, string cellPhone)
+  {
+    ReturnModel<bool> result = new();
+    var getUser = await _userService.GetByCellPhone(cellPhone);
+
+    UserBriefDto existingUser = getUser.Data;
+    if (existingUser is null)
+    {
+      result.CreateNotFoundModel(message: AppMessages.PleaseSignUp);
+      return result;
+    }
+
+
+
+    result.CreateSuccessModel(true);
+    return result;
+  }
   public async Task<ReturnModel<string>> SignUp(SignUpDto signUpModel)
   {
     ReturnModel<string> result = new();
@@ -83,6 +100,8 @@ public class AuthService : IAuthService
   private async Task<string> SendOptSms(UserBriefDto userBrief )
   {
     string code = new Random().Next(4).ToString();
+
+
     SendOptSmsInputDto sendOptSmsInput = new(code, SmsProvidersId.KavehNgar, userBrief);
     var sendSms = await _smsService.SendOptSms(sendOptSmsInput);
 

@@ -1,4 +1,4 @@
-using AuthService.Data.Entities;
+using AuthService.Entities;
 using ErrorHandlingDll.ReturnTypes;
 namespace AuthService.Interfaces;
 public interface IUserTokenService

@@ -1,3 +1,4 @@
+using AuthService.DataAccess.Repository.Interfaces;
 using AuthService.Entities;
 using AuthService.Interfaces;
 using ErrorHandlingDll.ReturnTypes;
@@ -8,9 +9,9 @@ namespace AuthService.Services;
 public class OptCodeService : IOptCodeService
 {
   private readonly IRepository<OptCodeModel> _codeRepository;
-  public OptCodeService(IRepository<OptCodeModel> codeRepository)
+  public OptCodeService(IUnitOfWork unitOfWork)
   {
-    _codeRepository = codeRepository;
+    _codeRepository = unitOfWork.OptCodeRepository;
   }
   public async Task<ReturnModel<long?>> CreateAsync(OptCodeModel codeModel)
   {

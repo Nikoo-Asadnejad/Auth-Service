@@ -53,9 +53,6 @@ namespace SmsService.Configurations
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IOptCodeService, OptCodeService>();
       services.AddScoped<IUserTokenService, UserTokenService>();
-      services.AddScoped<IUserTokenRepository, UserTokenRepository>();
-      services.AddScoped<IUserRepository, UserRepository>();
-      services.AddScoped<IOptCodeRepository, OptCodeRepository>();
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddSingleton<IJwtTokenTools, JwtTokenTools>();
 

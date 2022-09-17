@@ -1,16 +1,19 @@
+
 using AuthService.DataAccess.Repository.Interfaces;
+using AuthService.Entities;
+using GenericRepositoryDll.Repository.GenericRepository;
 
 namespace AuthService.DataAccess.Repository.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
-  public IUserRepository UserRepository { get; private set; }
+  public IRepository<UserModel> UserRepository { get; private set; }
 
-  public IOptCodeRepository OptCodeRepository { get; private set; }
+  public IRepository<OptCodeModel> OptCodeRepository { get; private set; }
 
-  public IUserTokenRepository UserTokenRepository { get; private set; }
+  public IRepository<UserTokenModel> UserTokenRepository { get; private set; }
 
-  public UnitOfWork(IUserRepository userRepository , IOptCodeRepository optCodeRepository,
-                     IUserTokenRepository userTokenRepository)
+  public UnitOfWork(IRepository<UserModel> userRepository , IRepository<OptCodeModel> optCodeRepository,
+                     IRepository<UserTokenModel> userTokenRepository)
   {
     UserRepository = userRepository;
     OptCodeRepository = optCodeRepository;

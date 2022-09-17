@@ -1,3 +1,4 @@
+using AuthService.DataAccess.Repository.Interfaces;
 using AuthService.Dtos.User;
 using AuthService.Entities;
 using AuthService.Interfaces;
@@ -8,9 +9,9 @@ namespace AuthService.Services;
 public class UserService : IUserService
 {
   private readonly IRepository<UserModel> _userRepository;
-  public UserService(IRepository<UserModel> userRepository)
+  public UserService(IUnitOfWork unitOfWork)
   {
-    _userRepository = userRepository;
+    _userRepository = unitOfWork.UserRepository;
   }
   public async Task<ReturnModel<long?>> CreateAsync(UserModel userModel)
   {

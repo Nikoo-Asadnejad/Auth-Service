@@ -2,7 +2,7 @@ using AuthService.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AuthService.Data.Entities;
+namespace AuthService.Entities;
 [Table("UserTokenModel")]
 public class UserTokenModel : BaseEntityModel
 {

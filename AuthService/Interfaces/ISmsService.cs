@@ -1,10 +1,10 @@
 using AuthService.Dtos.Sms;
+using AuthService.Dtos.User;
 using ErrorHandlingDll.ReturnTypes;
 
 namespace AuthService.Interfaces;
 public interface ISmsService
 {
-  Task<ReturnModel<long?>> SendOptSmsAsync(SendOptSmsInputDto smsInput);
-  Task<ReturnModel<long?>> SendSmsAsync(SendSmsInputDto smsInput);
+  Task<string> SendOptSmsAsync(UserBriefDto userBrief);
 }
 

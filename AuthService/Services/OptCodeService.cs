@@ -1,17 +1,21 @@
 using AuthService.DataAccess.Repository.Interfaces;
 using AuthService.Entities;
 using AuthService.Interfaces;
+using AuthService.Utils.Mappers;
 using ErrorHandlingDll.ReturnTypes;
 using GenericReositoryDll.Enumrations;
 using GenericRepositoryDll.Repository.GenericRepository;
+using System.Net;
 
 namespace AuthService.Services;
 public class OptCodeService : IOptCodeService
 {
   private readonly IRepository<OptCodeModel> _codeRepository;
-  public OptCodeService(IUnitOfWork unitOfWork)
+  private readonly IUserService _userService;
+  public OptCodeService(IUnitOfWork unitOfWork , IUserService userService)
   {
     _codeRepository = unitOfWork.OptCodeRepository;
+    _userService = userService;
   }
   public async Task<ReturnModel<long?>> CreateAsync(OptCodeModel codeModel)
   {
@@ -67,6 +71,31 @@ public class OptCodeService : IOptCodeService
 
     result.CreateSuccessModel(data: codeModel.Id, "Code Id");
     return result;
+  }
+  public async Task<string> CreateRandomCodeAsync(long userId)
+  {
+    OptCodeModel codeModel = new();
+    codeModel.CreateBasicModelWithRandomCode(userId);
+
+    var createOptCode = await CreateAsync(codeModel);
+    if (createOptCode.HttpStatusCode is HttpStatusCode.OK && createOptCode.Data is not null)
+      return codeModel.Code;
+
+    return null;
+  }
+  public async Task<bool> ValidateOptCodeAsync(string optCode, long userId)
+  {
+
+    var getLastCode = await _userService.GetLastAuthCodeAsync(userId);
+    string lastOptCode = getLastCode.Data.Code;
+
+    if (getLastCode.HttpStatusCode == HttpStatusCode.NotFound
+        || string.IsNullOrEmpty(lastOptCode)
+        || string.IsNullOrWhiteSpace(lastOptCode)
+        || lastOptCode != optCode)
+      return false;
+
+    return true;
   }
 }
 

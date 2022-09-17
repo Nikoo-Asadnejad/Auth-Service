@@ -10,6 +10,8 @@ public interface IOptCodeService
   Task<ReturnModel<OptCodeModel>> GetAsync(long id);
   Task<ReturnModel<OptCodeModel>> GetByCodeAsync(string code);
   Task<ReturnModel<List<OptCodeModel>>> GetListAsync(short count = 10, short ofset =0);
+  Task<string> CreateRandomCodeAsync(long userId);
+  Task<bool> ValidateOptCodeAsync(string optCode, long userId);
 }
 
 

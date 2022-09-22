@@ -30,6 +30,7 @@ namespace AuthService.Controllers
     [ProducesResponseType(typeof(ReturnModel<long>), 500)]
     public async Task<IActionResult> SignIn([FromBody]SignInDto signInDto)
     {
+      
       var result =await _authService.SignIn(signInDto);
       return StatusCode((int)result.HttpStatusCode,result);
     }
@@ -39,6 +40,7 @@ namespace AuthService.Controllers
     /// </summary>
     /// <param name="signUpDto"></param>
     /// <returns></returns>
+
     [HttpPost("api/sign-up/v1")]
     [ProducesResponseType(typeof(ReturnModel<long>), 200)]
     [ProducesResponseType(typeof(ReturnModel<long>), 400)]

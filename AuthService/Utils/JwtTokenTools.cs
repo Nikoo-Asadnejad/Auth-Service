@@ -80,7 +80,7 @@ namespace AuthService.Utils;
                 new Claim(TokenClaims.FirstName, userModel.FirstName),
                 new Claim(TokenClaims.LastName, userModel.LastName),
                 new Claim(TokenClaims.CellPhone, userModel.CellPhone),
-                new Claim(TokenClaims.Email, userModel.Email),
+                new Claim(TokenClaims.Email, userModel.Email ?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
          });
   private UserBriefDto GetUser(JwtSecurityToken token)

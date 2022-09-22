@@ -114,7 +114,7 @@ public class AuthService : IAuthService
     var token = _jwtTokenTools.GenerateToken(existingUser);
 
     await _userTokenService.CreateAsync(existingUser.Id, token);
-    await _userTokenService.ExpireOldTokensAsync(existingUser.Id);
+   // await _userTokenService.ExpireOldTokensAsync(existingUser.Id);
 
     result.CreateSuccessModel(token, "Token");
     return result;

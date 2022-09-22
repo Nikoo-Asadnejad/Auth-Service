@@ -1,5 +1,6 @@
 using AuthService.AppConstants;
 using AuthService.Configurations.AppSettings;
+using AuthService.Data;
 using AuthService.Dtos.Sms;
 using AuthService.Dtos.User;
 using AuthService.Entities;
@@ -25,6 +26,8 @@ public class AuthService : IAuthService
   private readonly IJwtTokenTools _jwtTokenTools;
   private readonly IOptCodeService _otpCodeService;
   private readonly IUserTokenService _userTokenService;
+
+
   public AuthService(IOptions<AppSetting> appSetting, IUserService userService, ISmsService smsService,
     IJwtTokenTools jwtTokenTools , IOptCodeService optCodeService , IUserTokenService userTokenService)
   {
@@ -34,11 +37,13 @@ public class AuthService : IAuthService
     _smsService = smsService;
     _otpCodeService = optCodeService;
     _userTokenService = userTokenService;
+
   }
 
   public async Task<ReturnModel<long>> SignIn(SignInDto signInDto)
   {
     ReturnModel<long> result = new();
+
     var getUser = await _userService.GetByCellPhoneAsync(signInDto.CellPhone);
 
     UserBriefDto existingUser = getUser.Data;

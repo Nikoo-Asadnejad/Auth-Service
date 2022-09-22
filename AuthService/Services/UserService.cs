@@ -42,7 +42,7 @@ public class UserService : IUserService
 
 
 
-    UserBriefDto user = (UserBriefDto)await _userRepository.GetSingleAsync(query: u => u.CellPhone == cellPhone,
+    UserBriefDto user = (UserBriefDto)await _userRepository.GetSingleAsync<UserBriefDto>(query: u => u.CellPhone == cellPhone,
                                                                            selector: u => new UserBriefDto(u));
     if (user is null)
     {

@@ -30,18 +30,19 @@ public class UserModel : BaseEntityModel
   [StringLength(11)]
   public string CellPhone { get; set; }
 
- // [EmailAddress]
+  [EmailAddress]
   [MaxLength(50)]
-  public string Email { get; set; }
+
+  public string? Email { get; set; }
   [MaxLength(50)]
-  public string Ip { get; set; }
+  public string? Ip { get; set; }
   [MaxLength(255)]
-  public string UserAgent { get; set; }
+  public string? UserAgent { get; set; }
 
   [RegularExpression("F|M")]
   [MaxLength(1)]
-  public char Gender { get; set; }
-  public string LastAuthCode { get; set; }
+  public char? Gender { get; set; }
+  public string? LastAuthCode { get; set; }
   public virtual ICollection<OptCodeModel> AuthCodes { get; set; }
   public virtual ICollection<UserTokenModel> UserTokens { get; set; }
   public UserModel() :base()

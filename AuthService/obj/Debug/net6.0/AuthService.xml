@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AuthService</name>
+    </assembly>
+    <members>
+        <member name="M:AuthService.Controllers.AuthController.SignIn(AuthService.Dtos.User.SignInDto)">
+            <summary>
+            Sign in request
+            </summary>
+            <param name="signInDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuthService.Controllers.AuthController.SignUp(AuthService.Dtos.User.SignUpDto)">
+            <summary>
+            Sign up request
+            </summary>
+            <param name="signUpDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AuthService.Controllers.AuthController.GenerateToken(AuthService.Dtos.User.GenerateTokenDto)">
+            <summary>
+            Generates a token for authecticating user
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -30,7 +30,7 @@ public class UserModel : BaseEntityModel
   [StringLength(11)]
   public string CellPhone { get; set; }
 
-  [EmailAddress]
+ // [EmailAddress]
   [MaxLength(50)]
   public string Email { get; set; }
   [MaxLength(50)]

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "AuthService/1.0.0": {
         "dependencies": {
+          "GenericRepositoryDll": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.9",
           "Microsoft.EntityFrameworkCore": "6.0.9",
           "Microsoft.EntityFrameworkCore.Abstractions": "6.0.9",
@@ -22,7 +23,6 @@
           "Swashbuckle.AspNetCore.Swagger": "6.4.0",
           "System.Text.Json": "6.0.5",
           "ErrorHandlingDll": "1.0.0.0",
-          "GenericRepositoryDll": "1.0.0.0",
           "HttpService": "1.0.0.0"
         },
         "runtime": {
@@ -1182,17 +1182,18 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
+      "GenericRepositoryDll/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.9",
+          "Microsoft.EntityFrameworkCore.Abstractions": "6.0.9"
+        },
+        "runtime": {
+          "GenericRepositoryDll.dll": {}
+        }
+      },
       "ErrorHandlingDll/1.0.0.0": {
         "runtime": {
           "ErrorHandlingDll.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "GenericRepositoryDll/1.0.0.0": {
-        "runtime": {
-          "GenericRepositoryDll.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -2082,12 +2083,12 @@
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
     },
-    "ErrorHandlingDll/1.0.0.0": {
-      "type": "reference",
+    "GenericRepositoryDll/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "GenericRepositoryDll/1.0.0.0": {
+    "ErrorHandlingDll/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

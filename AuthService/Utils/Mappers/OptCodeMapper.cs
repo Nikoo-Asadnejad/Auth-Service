@@ -12,7 +12,7 @@ public static class OptCodeMapper
   }
   public static OptCodeModel CreateBasicModelWithRandomCode(this OptCodeModel codeModel,long userId)
   {
-    string code = new Random().Next(4).ToString();
+    string code = new Random().Next(1000,9999).ToString();
     codeModel.UserId = userId;
     codeModel.Code = code;
     return codeModel;

@@ -44,7 +44,7 @@ public class OptCodeService : IOptCodeService
   {
     ReturnModel<OptCodeModel> result = new();
 
-    OptCodeModel codeModel = await _codeRepository.GetSingleAsync<OptCodeModel>(c=> c.Code == code);
+    OptCodeModel codeModel = await _codeRepository.GetSingleAsync(c=> c.Code == code);
     if (codeModel is null)
     {
       result.CreateNotFoundModel();

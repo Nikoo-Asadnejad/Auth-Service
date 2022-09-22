@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,9 +33,6 @@
     <Reference Include="ErrorHandlingDll">
       <HintPath>..\..\..\ErrorHandlingDll\ErrorHandlingDll\ErrorHandlingDll\ErrorHandlingDll\bin\Release\net6.0\ErrorHandlingDll.dll</HintPath>
     </Reference>
-    <Reference Include="GenericRepositoryDll">
-      <HintPath>..\..\..\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\bin\Release\net6.0\GenericRepositoryDll.dll</HintPath>
-    </Reference>
     <Reference Include="HttpService">
       <HintPath>..\..\..\HttpService\HttpServiceDll\HttpService\bin\Release\net6.0\HttpService.dll</HintPath>
     </Reference>
@@ -51,6 +49,10 @@
 
   <ItemGroup>
     <Folder Include="Dtos\OptCode\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll.csproj" />
   </ItemGroup>
 
 </Project>

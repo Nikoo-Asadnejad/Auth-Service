@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{CEC81BA4-44EE-4B8C-8ED5-E50E10DB4131}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{CEC81BA4-44EE-4B8C-8ED5-E50E10DB4131}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRepositoryDll", "..\..\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll\GenericRepositoryDll.csproj", "{002BEBC0-B7D2-43B6-B0A7-4C72CEE1C377}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CEC81BA4-44EE-4B8C-8ED5-E50E10DB4131}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEC81BA4-44EE-4B8C-8ED5-E50E10DB4131}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEC81BA4-44EE-4B8C-8ED5-E50E10DB4131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002BEBC0-B7D2-43B6-B0A7-4C72CEE1C377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002BEBC0-B7D2-43B6-B0A7-4C72CEE1C377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002BEBC0-B7D2-43B6-B0A7-4C72CEE1C377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002BEBC0-B7D2-43B6-B0A7-4C72CEE1C377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -40,8 +40,10 @@ public class UserService : IUserService
   {
     ReturnModel<UserBriefDto> result = new();
 
+
+
     UserBriefDto user = (UserBriefDto)await _userRepository.GetSingleAsync(query: u => u.CellPhone == cellPhone,
-                                                                                    selector: u => new UserBriefDto(u));
+                                                                           selector: u => new UserBriefDto(u));
     if (user is null)
     {
       result.CreateNotFoundModel();

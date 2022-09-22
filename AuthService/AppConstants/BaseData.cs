@@ -13,6 +13,14 @@ public struct BaseData
     public const int KavehNgar = 1;
   }
 
+  public struct SmsTypes
+  {
+    public const int Opt = 1;
+  }
+
+  public const string AppName = "چتینو";
+     
+
 }
 
 

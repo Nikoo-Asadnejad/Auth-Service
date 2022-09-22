@@ -6,6 +6,7 @@ using AuthService.Interfaces;
 using ErrorHandlingDll.ReturnTypes;
 using HttpService.Interface;
 using Microsoft.Extensions.Options;
+using SmsService.Percistance;
 using System.Net;
 using static SmsService.Percistance.BaseData;
 
@@ -28,18 +29,29 @@ public class SmsService : ISmsService
     if (code is null)
       return null;
 
+    string smsContent = string.Format(SmsTemplates.OptSms,BaseData.AppName,code);
+
     //after sending make opt code sent
-    SendOptSmsInputDto sendOptSmsInput = new(code, SmsProvidersId.KavehNgar, userBrief);
+    SendSmsInputDto sendOptSmsInput = new(SmsTypes.Opt,smsContent, SmsProvidersId.KavehNgar, userBrief);
     var sendSms = await SendSmsAsync(sendOptSmsInput);
 
     if (sendSms is not null)
+    {
+      MakeSmsSent(sendSms);
       return code;
+    }
+      
     else
       return null;
 
   }
 
-  private async Task<string?> SendSmsAsync(SendOptSmsInputDto smsInput)
+  private void MakeSmsSent(string sendSms)
+  {
+   
+  }
+
+  private async Task<string?> SendSmsAsync(SendSmsInputDto smsInput)
   {
     string url = _appSetting.Microservices.SmsService + ApiUrls.SendSms;
     var request = await _httpService.PostAsync<ReturnModel<SendSmsReturnDto>>(url,smsInput);

@@ -29,7 +29,7 @@ public class UserTokenService : IUserTokenService
   public async Task ExpireOldTokensAsync(long userId)
   {
     List<UserTokenModel> tokens = await _userTokenRepository
-                                .GetListAsync<UserTokenModel>(query: t => t.UserId == userId
+                                .GetListAsync(query: t => t.UserId == userId
                                                                   && t.IsExpired == false);
 
     //it may crash due to change tracking of the repository , if so check repository dll

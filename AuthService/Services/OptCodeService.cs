@@ -58,7 +58,7 @@ public class OptCodeService : IOptCodeService
   {
     ReturnModel<List<OptCodeModel>> result = new();
 
-    List<OptCodeModel> codes = await _codeRepository.GetListAsync<OptCodeModel>(skip: count, take: offset);
+    List<OptCodeModel> codes = await _codeRepository.GetAllAsync(skip: count, take: offset);
 
     result.CreateSuccessModel(data: codes);
     return result;

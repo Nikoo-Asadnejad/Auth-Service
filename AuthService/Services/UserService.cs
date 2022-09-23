@@ -57,7 +57,7 @@ public class UserService : IUserService
   {
     ReturnModel<List<UserModel>> result = new();
 
-    List<UserModel> users =await _userRepository.GetListAsync<UserModel>(skip: count, take: offset);
+    List<UserModel> users =await _userRepository.GetAllAsync(skip: count, take: offset);
 
     result.CreateSuccessModel(data: users);
     return result;

@@ -69,7 +69,7 @@ public class AuthService : IAuthService
     UserBriefDto existingUser = getUser.Data;
     if (existingUser is not null)
     {
-      result.CreateBadRequestModel(message: AppMessages.PleaseSignIn);
+      result.CreateBadRequestModel(message: AppMessages.YouHaveSignedUp);
       return result;
     }
 

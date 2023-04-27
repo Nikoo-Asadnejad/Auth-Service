@@ -1,5 +1,8 @@
 using AuthService.Dtos.User;
 using AuthService.Interfaces;
+using ErrorHandlingDll.ReturnTypes;
+using HttpService.Utils;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AuthService.Utils.Attributes
@@ -18,24 +21,22 @@ namespace AuthService.Utils.Attributes
     {
       var token = context.HttpContext.Request.Headers["Authorization"];
       if (string.IsNullOrEmpty(token))
-        UnAuthorize(context.HttpContext);
+        UnAuthorize(context);
 
       UserBriefDto user;
       var isTokenValid = _jwtTools.ValidateToken(token, out user);
 
       if (!isTokenValid || user is null)
-        UnAuthorize(context.HttpContext);
+        UnAuthorize(context);
 
       context.HttpContext.Items["User"] = user;
 
       if (_roles is not null && _roles.Count() > 0 && !_roles.Contains(user?.Role))
-        UnAuthorize(context.HttpContext);
+        UnAuthorize(context);
 
     }
-    private void UnAuthorize(HttpContext httpContext)
-    {
-      //add return model to respone
-      httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-    }
+    private void UnAuthorize(AuthorizationFilterContext httpContext)
+    =>httpContext.Result = new UnauthorizedObjectResult(new ReturnModel<string>().CreateUnAuthorizedModel());
+    
   }
 }
